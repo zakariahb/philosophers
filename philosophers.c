@@ -1,13 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/17 02:31:33 by zalaksya          #+#    #+#             */
+/*   Updated: 2025/03/18 16:01:56 by zalaksya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
-void parsing(char **str)
+static int	parsing(char **str, t_arg *arg)
 {
-    
-}
+	char	*p;
 
-int main (int ac, char **av)
+	p = ft_check_join(str);
+	if (ft_check_arg(&p, arg))
+		return (1);
+	return (0);
+}
+void *routine()
 {
-    if (ac != 4 || ac != 5)
-        return (0);
-    prsing(av);
+	printf("zakaria is the best");
+}
+int	main(int ac, char **av)
+{
+	t_arg	*arg;
+
+	// pthread_create();
+	pthread_t i ,j; // store the information about the tread 
+	pthread_create(&i , NULL, &routine, NULL);
+	pthread_create(&j , NULL, &routine, NULL);
+	pthread_join(i,  NULL);
+	pthread_join(j,  NULL);
+	arg = malloc(sizeof(t_arg));
+	if (ac == 1)
+		return (0);
+	if (parsing(av, arg))
+		return (write(2, "Error\n", 6), 1);
+	return (0);
 }

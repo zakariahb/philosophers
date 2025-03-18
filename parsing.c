@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/17 02:30:23 by zalaksya          #+#    #+#             */
+/*   Updated: 2025/03/18 02:42:09 by zalaksya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 static int	is_all_space(char *s)
@@ -23,41 +35,57 @@ static int	ft_isnum(char *str)
 		return (1);
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (!(str[i] >= '0' && str[i] <= '9'))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-static int ft_check_arg(char **str)
+static int	check_num(long n)
+{
+	if (n >= INT_MIN && n <= INT_MAX)
+		return (0);
+	return (1);
+}
+
+int	ft_check_arg(char **str, t_arg *arg)
 {
 	int		i;
+	long	n;
 	char	**ar;
 
 	i = 0;
 	ar = ft_split(*str, ' ');
 	if (!ar)
-		return (NULL);
+		return (0);
 	while (ar[i])
 	{
-		if (!ft_isnum(ar[i]) && !ft_check_num(ft_atoi(ar[i])))
-            return (0);
-		else
-            return (1);
+		n = ft_atoi(ar[i]);
+		if (ft_isnum(ar[i]) || check_num(n) || n <= 0)
+			return (1);
 		i++;
 	}
+	if (i != 4 && i != 5)
+		return (1);
+	arg->n_philo = atoi(ar[0]);
+	arg->t_die = atoi(ar[1]);
+	arg->t_eat = atoi(ar[2]);
+	arg->t_sleep = atoi(ar[3]);
+	if (ar[4])
+		arg->t_t_eat = atoi(ar[4]);
 	return (0);
 }
 
-char    *ft_check_join(char **av)
+char	*ft_check_join(char **av)
 {
 	int		i;
 	char	*temp;
-    char    *str;
+	char	*str;
 
 	i = 1;
-    str = NULL;
+	str = NULL;
+	temp = NULL;
 	while (av[i])
 	{
 		if (is_all_space(av[i]))
@@ -75,11 +103,4 @@ char    *ft_check_join(char **av)
 		i++;
 	}
 	return (str);
-}
-int parsing(char **str)
-{
-    ft_check_join(str);
-    if (ft_check_arg(str))
-        return (1);
-    return (0);
 }
