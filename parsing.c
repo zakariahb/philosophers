@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 02:30:23 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/18 02:42:09 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/03/19 02:15:17 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	ft_check_arg(char **str, t_arg *arg)
 	if (i != 4 && i != 5)
 		return (1);
 	arg->n_philo = atoi(ar[0]);
-	arg->t_die = atoi(ar[1]);
-	arg->t_eat = atoi(ar[2]);
-	arg->t_sleep = atoi(ar[3]);
+	arg->t_die = atoi(ar[1]) * 1000;
+	arg->t_eat = atoi(ar[2]) * 1000;
+	arg->t_sleep = atoi(ar[3]) * 1000;
 	if (ar[4])
 		arg->t_t_eat = atoi(ar[4]);
 	return (0);
