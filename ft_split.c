@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:28:35 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/17 02:29:58 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:45:48 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_free(char **str)
 	while (str[i])
 	{
 		free(str[i]);
+		i++;
 	}
 	free(str);
 }

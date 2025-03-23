@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 02:30:23 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/19 02:15:17 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/03/23 16:12:01 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,24 @@ static int	check_num(long n)
 	return (1);
 }
 
-int	ft_check_arg(char **str, t_arg *arg)
+t_philo *create_list(char **ar)
+{
+	int		j;
+	t_philo	*lst;
+
+	lst = NULL;
+	j = 0;
+	while(1)
+	{
+		if (j == ft_atoi(ar[0]))
+			break ;
+		ft_lstadd_back(&lst, ft_lstnew(ar));
+		j++;
+	}
+	return lst;
+}
+
+int	ft_check_arg(char **str)
 {
 	int		i;
 	long	n;
@@ -62,19 +79,13 @@ int	ft_check_arg(char **str, t_arg *arg)
 	while (ar[i])
 	{
 		n = ft_atoi(ar[i]);
-		if (ft_isnum(ar[i]) || check_num(n) || n <= 0)
-			return (1);
+		if (ft_isnum(ar[i]) || check_num(n) || ft_atoi(ar[0]) <= 0)
+			return (ft_free(ar), 1);
 		i++;
 	}
 	if (i != 4 && i != 5)
-		return (1);
-	arg->n_philo = atoi(ar[0]);
-	arg->t_die = atoi(ar[1]) * 1000;
-	arg->t_eat = atoi(ar[2]) * 1000;
-	arg->t_sleep = atoi(ar[3]) * 1000;
-	if (ar[4])
-		arg->t_t_eat = atoi(ar[4]);
-	return (0);
+		return (ft_free(ar), 1);
+	return (ft_free(ar), 0);
 }
 
 char	*ft_check_join(char **av)
@@ -92,7 +103,7 @@ char	*ft_check_join(char **av)
 		{
 			write(2, "Error\n", 6);
 			free(str);
-			exit(1);
+			return (NULL);
 		}
 		temp = ft_strjoin(str, av[i]);
 		free(str);

@@ -6,13 +6,13 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/23 03:05:18 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/03/23 15:54:59 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_philo	*ft_lstlast(t_philo *lst)
+static t_philo	*ft_lstlast(t_philo *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -33,12 +33,13 @@ t_philo	*ft_lstnew(char **ar)
 	if (!head)
 		return (NULL);
 	head->id = i + 1;
+	head->n_philo = ft_atoi(ar[0]);
 	head->t_die = ft_atoi(ar[1]) * 1000;
 	head->t_eat = ft_atoi(ar[2]) * 1000;
 	head->t_sleep = ft_atoi(ar[3]) * 1000;
 	if (ar[4])
 		head->t_t_eat = ft_atoi(ar[4]);
-	head -> next = NULL;
+	head-> next = NULL;
 	return (head);
 }
 
