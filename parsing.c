@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 02:30:23 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/23 16:12:01 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/03/24 03:12:25 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,8 @@ static int	check_num(long n)
 	return (1);
 }
 
-t_philo *create_list(char **ar)
-{
-	int		j;
-	t_philo	*lst;
 
-	lst = NULL;
-	j = 0;
-	while(1)
-	{
-		if (j == ft_atoi(ar[0]))
-			break ;
-		ft_lstadd_back(&lst, ft_lstnew(ar));
-		j++;
-	}
-	return lst;
-}
-
-int	ft_check_arg(char **str)
+char **ft_check_arg(char **str)
 {
 	int		i;
 	long	n;
@@ -79,13 +63,13 @@ int	ft_check_arg(char **str)
 	while (ar[i])
 	{
 		n = ft_atoi(ar[i]);
-		if (ft_isnum(ar[i]) || check_num(n) || ft_atoi(ar[0]) <= 0)
-			return (ft_free(ar), 1);
+		if (ft_isnum(ar[i]) || check_num(n) || n <= 0)
+			return (ft_free(ar), NULL);
 		i++;
 	}
 	if (i != 4 && i != 5)
-		return (ft_free(ar), 1);
-	return (ft_free(ar), 0);
+		return (ft_free(ar), NULL);
+	return (ar);
 }
 
 char	*ft_check_join(char **av)
