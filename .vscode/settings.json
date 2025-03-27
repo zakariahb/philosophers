@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"ft_strjoin": "c",
-		"philosophers.h": "c",
-		"stdlib.h": "c",
-		"pthread.h": "c"
-	}
-}
