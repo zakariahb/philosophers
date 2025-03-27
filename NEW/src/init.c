@@ -79,3 +79,4 @@ void	init_program(t_program *program, t_philo *philos)
 	pthread_mutex_init(&program->dead_lock, NULL);
 	pthread_mutex_init(&program->meal_lock, NULL);
 }
+

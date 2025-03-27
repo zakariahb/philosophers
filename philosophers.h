@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/27 02:35:50 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/03/27 03:17:29 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@
 # include "limits.h"
 # include "pthread.h"
 # include "sys/time.h"
-
-typedef struct s_data
-{
-	int				dead_flag;
-	t_philo			*philos;
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	print_lock;
-}	t_data;
 
 typedef struct s_philo
 {
@@ -42,6 +34,15 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 }	t_philo;
+
+typedef struct s_data
+{
+	int				dead_flag;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_lock;
+}	t_data;
+
 
 
 void	ft_lstadd_back(t_philo **lst, t_philo *new);
