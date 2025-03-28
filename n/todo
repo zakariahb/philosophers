@@ -1,0 +1,36 @@
+
+// FIXED ./philo 0 100 200 300 should i print an error 
+    // or just return without 
+// timeval
+// TODO test for last time before push 
+
+// void *start_simulation(void *arg)
+// {
+//     t_philo *philo;
+
+//     philo = (t_philo *)arg;
+//     if (one_philo(philo))
+//         return (NULL);
+//     if (philo->id % 2)
+//         ft_usleep(philo->simulation->time_to_eat, philo);
+//     while (!someone_is_dead(philo) && !ft_all_full(philo))
+//     {
+//         take_fork(philo);
+//         pthread_mutex_lock(&philo->simulation->read_mtx);
+//         philo->last_meal = get_time_ms();
+//         if (!philo->last_meal)
+//             return (NULL);
+//         pthread_mutex_unlock(&philo->simulation->read_mtx);
+//         print_turn(philo, "is eating");
+//         ft_usleep(philo->simulation->time_to_eat, philo); // NOTE if you reverse orders with th following line it hangs
+//         incr_eaten_meals(philo);
+//         pthread_mutex_unlock(philo->left_fork);
+//         pthread_mutex_unlock(philo->right_fork);
+//         print_turn(philo, "is sleeping"); // NOTE it breaks inside usleep, doest it print after death declaration ?
+//         ft_usleep(philo->simulation->time_to_sleep, philo);
+//         print_turn(philo, "is thinking");
+//     }
+//     return (NULL);
+// }
+
+//  ./philo 199 300 200 100
