@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/27 03:17:29 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/03/28 01:03:26 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_philo
 	size_t			t_eat;
 	size_t			t_sleep;
 	int				t_t_eat;
+	int				n_meals;
 	size_t			start_time;
 	int				is_dead;
 	pthread_t		thread;
@@ -41,6 +42,7 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
+	struct s_data *next;
 }	t_data;
 
 
@@ -53,7 +55,7 @@ char	*ft_strdup(const char *s1);
 char	*ft_check_join(char **av);
 char	**ft_check_arg(char **str);
 long	ft_atoi(const char *str);
-t_philo	*create_list(char **ar, t_philo *arg);
+t_philo	*create_list(char **ar, t_data *data);
 t_philo	*ft_lstnew(char **ar, t_philo *head);
 void	ft_free(char **str);
 

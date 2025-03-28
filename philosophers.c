@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 02:31:33 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/27 03:28:42 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/03/28 01:08:09 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,20 @@
 //		i++;
 //	}
 //}
-void init_input(t_philo *philo, char **ar)
+
+t_philo *create_list(char **ar, t_data *data)
 {
-	printf("str : %s\n", ar[1]);
-	philo->n_philo = ft_atoi(ar[1]);
-	puts("jjjj");
-	philo->t_die = ft_atoi(ar[2]);
-	philo->t_eat = ft_atoi(ar[3]);
-	philo->t_sleep = ft_atoi(ar[4]);
-	if (ar[5])
-		philo->t_t_eat = ft_atoi(ar[4]);
-	puts("jjj");
+	int		j;
+
+	j = 0;
+	while(1)
+	{
+		if (j == ft_atoi(ar[0]))
+			break ;
+		ft_lstadd_back(data, ft_lstnew(ar));
+		j++;
+	}
+	return data;
 }
 void init_philos(t_philo *philos)
 {
@@ -100,6 +103,8 @@ void init_philos(t_philo *philos)
 	while(j < philos->n_philo)
 	{
 		philos[i].id = i;
+		philos[i].
+		
 		
 		
 	}
@@ -107,36 +112,36 @@ void init_philos(t_philo *philos)
 
 }
 
-static char **parsing (char **av, t_philo *arg)
+static char **parsing (char **av)
 {
 	char	*p;
 	char	**ar = NULL;
 
 	p = ft_check_join(av);
 	if (!p)
-		return (free(arg), NULL);
+		return (NULL);
 	ar = ft_check_arg(&p);
+	free(p);
 	if (!ar)
-		return (free(p), NULL);
-	return (free(p), ar);
+		return (NULL);
+	return (ar);
 }
 
 int	main(int ac, char **av)
 {
-	t_philo	*philo;
+	t_philo	*philos;
 	t_data	*data;
 	char	**ar;
 	//t_data	*data;
 
-	philo = malloc(sizeof(t_philo));
 	data = malloc(sizeof(t_data));
 	if (ac != 5 && ac != 6)
 		return (0);
-	ar = parsing(av, philo);
+	ar = parsing(av);
 	if (!ar)
 		return (write(2, "Error\n", 6), 1);
-	init_input(data->philos, av);
-	init_philos(philo);
+	data =  create_list(av , data);
+	//init_philos(philo);
 	//create_thread_and_mutexes(data);
 	//while (list)
 	//{

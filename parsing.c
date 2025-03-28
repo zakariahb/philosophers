@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 02:30:23 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/27 01:39:32 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/03/28 00:52:12 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,6 @@ static int	check_num(long n)
 		return (0);
 	return (1);
 }
-
-//t_philo *create_list(char **ar, t_data *data)
-//{
-//	int		j;
-
-//	j = 0;
-//	while(1)
-//	{
-//		if (j == ft_atoi(ar[0]))
-//			break ;
-//		ft_lstadd_back(data->list, ft_lstnew(ar, data->list));
-//			j++;
-//		}
-//		return lst;
-//	}
 	
 char **ft_check_arg(char **str)
 {
