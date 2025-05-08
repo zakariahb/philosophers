@@ -3,7 +3,7 @@ NAME = philo
 SRC = ft_atoi.c list.c ft_strjoin.c ft_split.c parsing.c philosophers.c 
 OBJ = $(SRC:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
+FLAGS = -Wall -Wextra -Werror ##-fsanitize=address -g
 CC = cc 
 
 all : $(NAME)
