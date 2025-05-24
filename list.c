@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/28 03:13:16 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/24 09:50:44 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,7 @@ static t_data	*ft_lstlast(t_data *lst)
 	return (lst);
 }
 
-// typedef struct s_philo
-// {
-// 	int				id;
-// 	int				n_philo;
-// 	size_t			t_die;
-// 	size_t			t_eat;
-// 	size_t			t_sleep;
-// 	int				t_t_eat;
-// 	size_t			s_time;
-// 	int				n_meals;
-// 	int				is_dead;
-// 	int				right_fork;
-// 	int				left_fork;
-// }	t_philo;
 
-// typedef struct s_data
-// {
-// 	int				dead_flag;
-// 	t_philo			*philos;
-// 	pthread_t		thread;
-// 	pthread_mutex_t	*forks;
-// 	pthread_mutex_t	print_lock;
-// 	struct s_data	*next;
-// }	t_data;
 t_data *ft_lstnew(char **ar, t_data *data)
 {
 	static int	i;
@@ -81,4 +58,3 @@ void	ft_lstadd_back(t_data **lst, t_data *new)
 	else
 		temp->next = new;
 }
-
