@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/28 02:39:32 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/26 08:28:35 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 typedef struct s_philo
 {
 	int				id;
+	int				is_dead;
+	int				right_fork;
+	int				left_fork;
 	int				n_philo;
 	size_t			t_die;
 	size_t			t_eat;
@@ -30,24 +33,19 @@ typedef struct s_philo
 	int				t_t_eat;
 	size_t			s_time;
 	int				n_meals;
-	int				is_dead;
-	int				right_fork;
-	int				left_fork;
+	struct s_philo	*next;
 }	t_philo;
 
 typedef struct s_data
 {
-	int				dead_flag;
 	t_philo			*philos;
 	pthread_t		thread;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
-	struct s_data	*next;
 }	t_data;
 
-
-
-void	ft_lstadd_back(t_data **lst, t_data *new);
+void	ft_init_informatoin(t_philo **data, char **ar);
+void	ft_lstadd_back(t_philo **lst, t_philo *new);
 char	*ft_strjoin(char *s1, const char *s2);
 char	**ft_split(char const *s, char c);
 int		ft_strlen(const char *str);
@@ -55,8 +53,6 @@ char	*ft_strdup(const char *s1);
 char	*ft_check_join(char **av);
 char	**ft_check_arg(char **str);
 long	ft_atoi(const char *str);
-t_data	*create_list(char **ar, t_data *data);
-t_data	*ft_lstnew(char **ar, t_data *data);
 void	ft_free(char **str);
 
 #endif

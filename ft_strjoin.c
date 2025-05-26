@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 10:07:37 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/17 02:30:06 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/25 08:36:47 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,33 @@ int	ft_strlen(const char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+long	ft_atoi(const char *str)
+{
+	long	i;
+	long	res;
+	long	sign;
+
+	i = 0;
+	res = 0;
+	sign = 1;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign *= (-1);
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = (res * 10) + (str[i] - '0');
+		if (res > INT_MAX || res < INT_MIN)
+			break ;
+		i++;
+	}
+	return (res * sign);
 }
 
 char	*ft_strdup(const char *s1)

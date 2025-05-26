@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 02:30:23 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/03/28 00:52:12 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/26 08:25:16 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ static int	check_num(long n)
 		return (0);
 	return (1);
 }
-	
-char **ft_check_arg(char **str)
+
+char	**ft_check_arg(char **str)
 {
-		int		i;
-		long	n;
-		char	**ar;
-		
-		i = 0;
-		ar = ft_split(*str, ' ');
+	int		i;
+	long	n;
+	char	**ar;
+
+	i = 0;
+	ar = ft_split(*str, ' ');
 	if (!ar)
 		return (NULL);
 	while (ar[i])
