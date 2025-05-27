@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = list.c ft_strjoin.c init.c ft_split.c parsing.c philosophers.c 
+SRC = ft_strjoin.c init.c ft_split.c parsing.c philosophers.c 
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror -fsanitize=address -g

@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 10:07:37 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/25 08:36:47 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:06:38 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*ft_strjoin(char *s1, const char *s2)
 		return (ft_strdup(s1));
 	p = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!p)
-		return (free(s1), s1 = NULL, NULL);
+		return (NULL);
 	while (s1[i])
 	{
 		p[i] = s1[i];

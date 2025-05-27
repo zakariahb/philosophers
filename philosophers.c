@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/26 18:56:57 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:05:04 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,58 @@ static char	**parsing(char **av)
 	return (ar);
 }
 
-void	init_data(t_data **data, char **ar)
+void	print_message(pthread_mutex_t *print_lock, int id, char *str)
 {
-	(*data)->philos = NULL;
-	(*data)->n_philo = ft_atoi(ar[0]);
-	(*data)->t_die = ft_atoi(ar[1]);
-	(*data)->t_eat = ft_atoi(ar[2]);
-	(*data)->t_sleep = ft_atoi(ar[3]);
+	pthread_mutex_lock(print_lock);
+	printf("%d %s\n", id, str);
+	pthread_mutex_unlock(print_lock);
 }
 
-void	start_routine(void *input)
+void	*start_routine(void *input)
 {
-	t_data *data;
-	
-	data = (t_data *)input;
-	
-	
-	
+	t_philo	*philo;
+	t_data	*data;
+
+	philo = (t_philo *)input;
+	data = philo->data;
+	while (1)
+	{
+		if (philo->id % 2 == 0)
+			usleep(100);
+		pthread_mutex_lock(philo->l_fork);
+		print_message(&data->print_lock, philo->id, "has taken a fork");
+		pthread_mutex_lock(philo->r_fork);
+		print_message(&data->print_lock, philo->id, "has taken a fork");
+		print_message(&data->print_lock, philo->id, "is eating");
+		usleep(data->t_eat * 1000);
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+		print_message(&data->print_lock, philo->id, "is sleeping");
+		usleep(data->t_sleep * 1000);
+		print_message(&data->print_lock, philo->id, "is thinking");
+	}
+	return (NULL);
 }
 
-void create_threads(t_data **data)
+int	create_threads(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	pthread_t thread[(*data)->n_philo];
-	while (i < (*data)->n_philo)
+	while (i < data->n_philo)
 	{
-		pthread_create(&thread[i], NULL, start_routine, NULL);
+		if (pthread_create(&data->philos[i].thread, NULL, start_routine, &data->philos[i]) != 0)
+			return (1);	
 		i++;
 	}
+	i = 0;
+	while (i < data->n_philo)
+	{
+		if (pthread_join(data->philos[i].thread, NULL) != 0)
+			return (1);	
+		i++;
+	}
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -73,19 +95,16 @@ int	main(int ac, char **av)
 	t_data	*data;
 	char	**ar;
 
-	data = NULL;
 	ar = NULL;
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (0);
 	if (ac != 5 && ac != 6)
 		return (0);
 	ar = parsing(av);
 	if (!ar)
 		return (write(2, "Error\n", 6), 1);
-	init_data(&data, ar);
-	ft_init_informatoin(&data);
-	create_threads(&data);
+	data = malloc(sizeof(t_data));
+	ft_init_informatoin(&data, ar);
+	create_threads(data);
 	ft_free(ar);
 	return (0);
 }
+
