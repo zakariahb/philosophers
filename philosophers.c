@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/28 08:07:01 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:39:07 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ static char	**parsing(char **av)
 	return (ar);
 }
 
-void	print_message(pthread_mutex_t *print_lock, int id, char *str)
+void	print_message(size_t time, pthread_mutex_t *print_lock, int id, char *str)
 {
 	pthread_mutex_lock(print_lock);
-	printf("%d %s\n", id, str);
+	printf("%zu %d %s\n", time ,id, str);
 	pthread_mutex_unlock(print_lock);
 }
 
@@ -50,29 +50,48 @@ void	*start_routine(void *input)
 
 	philo = (t_philo *)input;
 	data = philo->data;
+	if (!philo->id % 2)
+		usleep(100);
 	while (1)
 	{
 		pthread_mutex_lock(philo->l_fork);
-		print_message(&data->print_lock, philo->id, "has taken a fork");
+		size_t time = get_current_time() - data->start_simulation;
+		print_message(time, &data->print_lock, philo->id, "has taken left fork");
 		pthread_mutex_lock(philo->r_fork);
-		print_message(&data->print_lock, philo->id, "has taken a fork");
-		print_message(&data->print_lock, philo->id, "is eating");
+		print_message(time, &data->print_lock, philo->id, "has taken right fork");
+		print_message(time, &data->print_lock, philo->id, "is eating");
 		usleep(data->t_eat * 1000);
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
-		print_message(&data->print_lock, philo->id, "is sleeping");
+		print_message(time, &data->print_lock, philo->id, "is sleeping");
 		usleep(data->t_sleep * 1000);
-		print_message(&data->print_lock, philo->id, "is thinking");
+		print_message(time, &data->print_lock, philo->id, "is thinking");
 	}
 	return (NULL);
+
 }
-// void monitoring(void *monitor)
+// void monitoring(void *monitor)make 
+
+// {
+// 	t_philo *philo;
+// 	t_data *data;
+	
+// 	philo = (t_philo *)philo;
+// 	data = philo->data;
+// 	while (1)
+// 	{
+		
+// 	}
+	
+// }
+
 int	create_threads(t_data *data)
 {
 	// pthread_t monitor;
 	int	i;
 
 	i = 0;
+	data->start_simulation = get_current_time();
 	while (i < data->n_philo)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL, start_routine, &data->philos[i]) != 0)

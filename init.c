@@ -47,7 +47,9 @@ void init_philos(t_data **data)
 		(*data)->philos[i].id = i + 1;
 		(*data)->philos[i].n_meals = 0;
 		(*data)->philos[i].l_fork = &(*data)->forks[(*data)->philos[i].id];
-		(*data)->philos[i].r_fork = &(*data)->forks[(*data)->philos[i].id % (*data)->n_philo];
+		(*data)->philos[i].r_fork = &(*data)->forks[(*data)->philos[i].id % (*data)->n_philo + 1];
+		printf("%d\n", (*data)->philos[i].id);
+		printf("%d\n", ((*data)->philos[i].id) % (*data)->n_philo + 1);
 		(*data)->philos[i].data = *data;
 		i++;
 	}
