@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/27 13:42:02 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/28 09:18:39 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_data
 }	t_data;
 
 void	ft_init_informatoin(t_data **data, char **ar);
-// void	ft_lstadd_back(t_philo **lst, t_philo *new);
 char	*ft_strjoin(char *s1, const char *s2);
 void	init_data(t_data **data, char **ar);
 char	**ft_split(char const *s, char c);
@@ -55,6 +54,5 @@ char	*ft_check_join(char **av);
 char	**ft_check_arg(char **str);
 long	ft_atoi(const char *str);
 void	ft_free(char **str);
-// t_philo	*lst_new();
 
 #endif

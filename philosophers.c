@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/27 15:05:04 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/28 08:07:01 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	*start_routine(void *input)
 	data = philo->data;
 	while (1)
 	{
-		if (philo->id % 2 == 0)
-			usleep(100);
 		pthread_mutex_lock(philo->l_fork);
 		print_message(&data->print_lock, philo->id, "has taken a fork");
 		pthread_mutex_lock(philo->r_fork);
@@ -68,9 +66,10 @@ void	*start_routine(void *input)
 	}
 	return (NULL);
 }
-
+// void monitoring(void *monitor)
 int	create_threads(t_data *data)
 {
+	// pthread_t monitor;
 	int	i;
 
 	i = 0;
@@ -80,13 +79,17 @@ int	create_threads(t_data *data)
 			return (1);	
 		i++;
 	}
+	// if (pthread_create(&monitor, NULL, monitoring, NULL) != 0)
+	// 	return (1);
 	i = 0;
 	while (i < data->n_philo)
 	{
 		if (pthread_join(data->philos[i].thread, NULL) != 0)
-			return (1);	
+			return (1);
 		i++;
 	}
+	// if (pthread_join(monitor, NULL) != 0)
+	// 	return (1);
 	return (0);
 }
 
