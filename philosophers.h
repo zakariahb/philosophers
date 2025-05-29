@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/28 12:30:05 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:39:35 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread;
-	int				n_meals;
+	int				meals_eaten;
 	size_t			last_meal_time;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
@@ -41,6 +41,7 @@ typedef struct s_data
 	int				max_meals;
 	int				someone_died;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t	meals;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
 }	t_data;

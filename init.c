@@ -33,6 +33,7 @@ int	init_mutex(t_data **data)
 		i++;
 	}
 	pthread_mutex_init(&(*data)->print_lock, NULL);
+	pthread_mutex_init(&(*data)->meals, NULL);
 	return (0);
 }
 
@@ -45,9 +46,10 @@ void init_philos(t_data **data)
 	while (i < (*data)->n_philo)
 	{
 		(*data)->philos[i].id = i + 1;
-		(*data)->philos[i].n_meals = 0;
+		(*data)->philos[i].meals_eaten = 0;
+		(*data)->philos[i].last_meal_time = 0;
 		(*data)->philos[i].l_fork = &(*data)->forks[(*data)->philos[i].id];
-		(*data)->philos[i].r_fork = &(*data)->forks[(*data)->philos[i].id % (*data)->n_philo + 1];
+		(*data)->philos[i].r_fork = &(*data)->forks[((*data)->philos[i].id + 1) % (*data)->n_philo];
 		(*data)->philos[i].data = *data;
 		i++;
 	}

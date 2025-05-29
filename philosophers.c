@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/28 13:39:07 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:15:08 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,41 @@ void	*start_routine(void *input)
 		pthread_mutex_lock(philo->r_fork);
 		print_message(time, &data->print_lock, philo->id, "has taken right fork");
 		print_message(time, &data->print_lock, philo->id, "is eating");
+		pthread_mutex_lock(&data->meals);
+		philo->meals_eaten++;
+		philo->last_meal_time = get_current_time();
+		pthread_mutex_unlock(&data->meals);
 		usleep(data->t_eat * 1000);
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 		print_message(time, &data->print_lock, philo->id, "is sleeping");
 		usleep(data->t_sleep * 1000);
 		print_message(time, &data->print_lock, philo->id, "is thinking");
+		return (NULL);
 	}
 	return (NULL);
 
 }
-// void monitoring(void *monitor)make 
+// void *monitoring(void *monitor)
 
 // {
 // 	t_philo *philo;
 // 	t_data *data;
-	
-// 	philo = (t_philo *)philo;
+
+// 	philo = (t_philo *)monitor;
 // 	data = philo->data;
 // 	while (1)
 // 	{
 		
+// 		if (get_current_time() - philo->last_meal_time >= data->t_die)
+// 		{
+// 			pthread_mutex_lock(&data->print_lock);
+// 			print_message(get_current_time() - data->start_simulation, &data->print_lock, philo->id, "is dead");
+// 			pthread_mutex_unlock(&data->print_lock);
+// 			return (NULL);
+// 		}
 // 	}
+// 	return (NULL);
 	
 // }
 
@@ -98,7 +111,7 @@ int	create_threads(t_data *data)
 			return (1);	
 		i++;
 	}
-	// if (pthread_create(&monitor, NULL, monitoring, NULL) != 0)
+	// if (pthread_create(&monitor, NULL, monitoring, &data->philos[i]) != 0)
 	// 	return (1);
 	i = 0;
 	while (i < data->n_philo)
