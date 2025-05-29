@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/29 11:39:35 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:11:04 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include "limits.h"
 # include "pthread.h"
 # include "sys/time.h"
+
+# include <string.h>
 
 typedef struct s_philo
 {
@@ -36,11 +38,13 @@ typedef struct s_data
 	int				n_philo;
 	size_t			t_die;
 	size_t			start_simulation;
+	int				simulation_ended;
 	size_t			t_eat;
 	size_t			t_sleep;
 	int				max_meals;
 	int				someone_died;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	meals;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
