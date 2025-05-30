@@ -22,6 +22,9 @@ fclean : clean
 
 re : fclean all
 
+run : re
+	./$(NAME) 100 200 300 400
+
 git :
 		git add .
 		git commit -m "philo"
