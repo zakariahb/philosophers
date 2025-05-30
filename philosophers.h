@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/29 15:11:04 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/05/30 06:56:52 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_data
 	size_t			start_simulation;
 	int				simulation_ended;
 	size_t			t_eat;
+	int				t_t_eat;
 	size_t			t_sleep;
 	int				max_meals;
 	int				someone_died;

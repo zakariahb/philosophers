@@ -1,3 +1,74 @@
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   init.c                                             :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2025/05/25 16:16:50 by zalaksya          #+#    #+#             */
+// /*   Updated: 2025/05/27 12:26:23 by zalaksya		###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
+
+// #include "philosophers.h"
+
+// void	init_data(t_data **data, char **ar)
+// {
+// 	(*data)->n_philo = ft_atoi(ar[0]);
+// 	(*data)->t_die = ft_atoi(ar[1]) * 1000;
+// 	(*data)->t_eat = ft_atoi(ar[2]) * 1000;
+// 	(*data)->t_sleep = ft_atoi(ar[3]) * 1000;
+// 	if (ar[4])
+// 		(*data)->t_t_eat = ft_atoi(ar[4]);
+// 	else
+// 		(*data)->t_t_eat = -1;
+// 	(*data)->simulation_ended = 0;
+// }
+
+// int	init_mutex(t_data **data)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	(*data)->forks = malloc((*data)->n_philo);
+// 	while (i < (*data)->n_philo)
+// 	{	
+// 		if (pthread_mutex_init(&(*data)->forks[i], NULL) != 0)
+// 			return (1);
+// 		i++;
+// 	}
+// 	pthread_mutex_init(&(*data)->print_lock, NULL);
+// 	pthread_mutex_init(&(*data)->meals, NULL);
+// 	pthread_mutex_init(&(*data)->death_mutex, NULL);
+// 	return (0);
+// }
+
+// void init_philos(t_data **data)
+// {
+// 	int	i;
+	
+// 	i = 0;
+// 	(*data)->philos = malloc((*data)->n_philo * sizeof(t_philo));
+// 	while (i < (*data)->n_philo)
+// 	{
+// 		(*data)->philos[i].id = i + 1;
+// 		(*data)->philos[i].meals_eaten = 0;
+// 		(*data)->philos[i].last_meal_time = 0;
+// 		(*data)->philos[i].l_fork = &(*data)->forks[(*data)->philos[i].id];
+// 		(*data)->philos[i].r_fork = &(*data)->forks[(*data)->philos[i].id % (*data)->n_philo + 1];
+// 		(*data)->philos[i].data = *data;
+// 		i++;
+// 	}
+// }
+
+// void	ft_init_informatoin(t_data **data, char **ar)
+// {
+// 	init_data(data, ar);
+// 	init_mutex(data);
+// 	init_philos(data);
+// }
+
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,7 +77,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:16:50 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/05/27 12:26:23 by zalaksya		###   ########.fr       */
+/*   Updated: 2025/05/27 12:26:23 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +85,19 @@
 
 void	init_data(t_data **data, char **ar)
 {
+	*data = malloc(sizeof(t_data));
+	if (!*data)
+	{
+		printf("Error: Memory allocation failed\n");
+		exit(EXIT_FAILURE);
+	}
 	(*data)->n_philo = ft_atoi(ar[0]);
 	(*data)->t_die = ft_atoi(ar[1]) * 1000;
 	(*data)->t_eat = ft_atoi(ar[2]) * 1000;
 	(*data)->t_sleep = ft_atoi(ar[3]) * 1000;
+	(*data)->t_t_eat = (ar[4]) ? ft_atoi(ar[4]) : -1;
 	(*data)->simulation_ended = 0;
+	(*data)->start_simulation = 0;
 }
 
 int	init_mutex(t_data **data)
@@ -26,16 +105,27 @@ int	init_mutex(t_data **data)
 	int	i;
 
 	i = 0;
-	(*data)->forks = malloc((*data)->n_philo);
+	(*data)->forks = malloc(sizeof(pthread_mutex_t) * (*data)->n_philo);
+	if (!(*data)->forks)
+		return (1);
 	while (i < (*data)->n_philo)
 	{	
 		if (pthread_mutex_init(&(*data)->forks[i], NULL) != 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&(*data)->forks[i]);
+			free((*data)->forks);
 			return (1);
+		}
 		i++;
 	}
-	pthread_mutex_init(&(*data)->print_lock, NULL);
-	pthread_mutex_init(&(*data)->meals, NULL);
-	pthread_mutex_init(&(*data)->death_mutex, NULL);
+	if (pthread_mutex_init(&(*data)->print_lock, NULL) != 0 ||
+		pthread_mutex_init(&(*data)->meals, NULL) != 0 ||
+		pthread_mutex_init(&(*data)->death_mutex, NULL) != 0)
+	{
+		// destroy_mutexes(*data, (*data)->n_philo);
+		return (1);
+	}
 	return (0);
 }
 
@@ -44,14 +134,20 @@ void init_philos(t_data **data)
 	int	i;
 	
 	i = 0;
-	(*data)->philos = malloc((*data)->n_philo * sizeof(t_philo));
+	(*data)->philos = malloc(sizeof(t_philo) * (*data)->n_philo);
+	if (!(*data)->philos)
+	{
+		printf("Error: Memory allocation failed\n");
+		// destroy_mutexes(*data, (*data)->n_philo);
+		exit(EXIT_FAILURE);
+	}
 	while (i < (*data)->n_philo)
 	{
 		(*data)->philos[i].id = i + 1;
 		(*data)->philos[i].meals_eaten = 0;
 		(*data)->philos[i].last_meal_time = 0;
-		(*data)->philos[i].l_fork = &(*data)->forks[(*data)->philos[i].id];
-		(*data)->philos[i].r_fork = &(*data)->forks[(*data)->philos[i].id % (*data)->n_philo + 1];
+		(*data)->philos[i].l_fork = &(*data)->forks[i];
+		(*data)->philos[i].r_fork = &(*data)->forks[(i + 1) % (*data)->n_philo];
 		(*data)->philos[i].data = *data;
 		i++;
 	}
@@ -60,6 +156,11 @@ void init_philos(t_data **data)
 void	ft_init_informatoin(t_data **data, char **ar)
 {
 	init_data(data, ar);
-	init_mutex(data);
+	if (init_mutex(data) != 0)
+	{
+		free(*data);
+		printf("Error: Mutex initialization failed\n");
+		exit(EXIT_FAILURE);
+	}
 	init_philos(data);
 }
