@@ -15,9 +15,9 @@
 void	init_data(t_data **data, char **ar)
 {
 	(*data)->n_philo = ft_atoi(ar[0]);
-	(*data)->t_die = ft_atoi(ar[1]) * 1000;
-	(*data)->t_eat = ft_atoi(ar[2]) * 1000;
-	(*data)->t_sleep = ft_atoi(ar[3]) * 1000;
+	(*data)->t_die = ft_atoi(ar[1]);// * 1000;
+	(*data)->t_eat = ft_atoi(ar[2]);// * 1000;
+	(*data)->t_sleep = ft_atoi(ar[3]);// * 1000;
 	if (ar[4])
 		(*data)->t_t_eat = ft_atoi(ar[4]);
 	else
@@ -30,7 +30,7 @@ int	init_mutex(t_data **data)
 	int	i;
 
 	i = 0;
-	(*data)->forks = malloc((*data)->n_philo);
+	(*data)->forks = malloc(sizeof(pthread_mutex_t) * (*data)->n_philo);;
 	while (i < (*data)->n_philo)
 	{	
 		if (pthread_mutex_init(&(*data)->forks[i], NULL) != 0)
@@ -40,7 +40,6 @@ int	init_mutex(t_data **data)
 			free((*data)->forks);
 			return (1);
 		}
-			return (1);
 		i++;
 	}
 	pthread_mutex_init(&(*data)->print_lock, NULL);
@@ -60,8 +59,8 @@ void init_philos(t_data **data)
 		(*data)->philos[i].id = i + 1;
 		(*data)->philos[i].meals_eaten = 0;
 		(*data)->philos[i].last_meal_time = 0;
-		(*data)->philos[i].l_fork = &(*data)->forks[(*data)->philos[i].id];
-		(*data)->philos[i].r_fork = &(*data)->forks[(*data)->philos[i].id % (*data)->n_philo + 1];
+		(*data)->philos[i].l_fork = &(*data)->forks[i];
+		(*data)->philos[i].r_fork = &(*data)->forks[(i + 1) % (*data)->n_philo];
 		(*data)->philos[i].data = *data;
 		i++;
 	}
