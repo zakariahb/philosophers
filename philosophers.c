@@ -6,13 +6,13 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/06/01 17:20:37 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/06/04 07:15:12 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int64_t	get_current_time(void)
+size_t get_current_time(void)
 {
 	struct timeval	time;
 
@@ -50,7 +50,7 @@ static char	**parsing(char **av)
 int	print_message(t_data *data, char *str, int id)
 {
 	pthread_mutex_lock(&data->print_lock);
-	printf("%llu %d %s\n", get_current_time() - data->start_simulation ,id, str);
+	printf("%lu %d %s\n", get_current_time() - data->start_simulation ,id, str);
 	pthread_mutex_unlock(&data->print_lock);
 	if (!strcmp(str, "died"))
 		return (1);
@@ -108,7 +108,7 @@ void *monitoring(void *monitor)
 		i = 0;
 		while (i < data->n_philo)
 		{
-			int64_t time = get_current_time() - data->philos[i].last_meal_time;
+			unsigned long long time = get_current_time() - data->philos[i].last_meal_time;
 			if (time > INT_MAX)
 				time = 0;
 			if (time >= data->t_die)
@@ -127,7 +127,7 @@ void *monitoring(void *monitor)
 		{
 			pthread_mutex_lock(&data->death_mutex);	
 			data->simulation_ended = 1;
-			pthread_mutex_unlock(&data->death_mutex);	
+			pthread_mutex_unlock(&data->death_mutex);
 			break ;
 		}
 		usleep(100); 
