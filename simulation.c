@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:11:30 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/01 20:49:20 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:10:21 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,16 @@ static void	ft_take_fork(t_philo	*philo, t_data	*data)
 
 static int	ft_eat(t_philo	*philo, t_data	*data)
 {
-	pthread_mutex_lock(&data->meals);
-	philo->eating = 1;
-	pthread_mutex_unlock(&data->meals);
 	print_message(data, "is eating", philo->id);
 	pthread_mutex_lock(&data->time_last_eat);
 	philo->last_meal_time = get_current_time();
-	if (philo->last_meal_time == 0)
-		return (printf("ana Kharj\n"), 0);
 	pthread_mutex_unlock(&data->time_last_eat);
+	pthread_mutex_lock(&data->meals);
+	philo->meals_eaten++;
+	pthread_mutex_unlock(&data->meals);
 	ft_usleep(data->t_eat);
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_lock(&data->meals);
-	philo->meals_eaten++;
-	philo->eating = 0;
-	pthread_mutex_unlock(&data->meals);
 	return (1);
 }
 
