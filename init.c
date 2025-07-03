@@ -24,7 +24,7 @@ void	init_data(t_data **data, char **ar)
 		(*data)->t_t_eat = -1;
 	(*data)->someone_died = 0;
 	(*data)->max_meals = 0;
-	
+	ft_free(ar);
 }
 
 int	init_mutex(t_data **data)
@@ -44,19 +44,41 @@ int	init_mutex(t_data **data)
 		}
 		i++;
 	}
-	pthread_mutex_init(&(*data)->time_last_eat, NULL);
-	pthread_mutex_init(&(*data)->print_lock, NULL);
-	pthread_mutex_init(&(*data)->meals, NULL);
-	pthread_mutex_init(&(*data)->death_mutex, NULL);
+	if (pthread_mutex_init(&(*data)->time_last_eat, NULL))
+		return (1);
+	if (pthread_mutex_init(&(*data)->print_lock, NULL))
+		return (1);
+	if (pthread_mutex_init(&(*data)->meals, NULL))
+		return (1);
+	if (pthread_mutex_init(&(*data)->death_mutex, NULL))
+		return (1);
 	return (0);
 }
 
-void	init_philos(t_data **data)
+void	free_ar(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (data->philos)
+	{
+		while (i < data->n_philo)
+		{
+			free(&data->philos[i]);
+			i++;
+		}
+		free(data->philos);
+	}
+}
+
+int	init_philos(t_data **data)
 {
 	int	i;
 
 	i = 0;
 	(*data)->philos = malloc((*data)->n_philo * sizeof(t_philo));
+	if (!(*data)->philos)
+		return (1);
 	while (i < (*data)->n_philo)
 	{
 		(*data)->philos[i].id = i + 1;
@@ -69,11 +91,15 @@ void	init_philos(t_data **data)
 		(*data)->philos[i].data = *data;
 		i++;
 	}
+	return (0);
 }
 
-void	ft_init_informatoin(t_data **data, char **ar)
+int	ft_init_informatoin(t_data **data, char **ar)
 {
 	init_data(data, ar);
-	init_mutex(data);
-	init_philos(data);
+	if (init_mutex(data))
+		return (destroy_mutex(*data), 1);
+	if (!init_philos(data))
+		return (destroy_mutex(*data), 1);
+	return (0);
 }

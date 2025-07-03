@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:51:54 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/01 20:59:25 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:13:13 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,6 @@ size_t	get_current_time(void)
 
 	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
-int	ft_usleep(size_t time)
-{
-	size_t	start;
-
-	start = get_current_time();
-	while ((get_current_time() - start) < time)
-		// usleep(time / 10);
-		usleep(200);
-	return (0);
 }
 
 char	**parsing(char **av)

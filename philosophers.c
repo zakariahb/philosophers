@@ -6,11 +6,24 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/02 12:05:04 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:37:01 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	destroy_mutex(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->n_philo)
+		pthread_mutex_destroy(&data->forks[i]);
+	pthread_mutex_destroy(&data->time_last_eat);
+	pthread_mutex_destroy(&data->print_lock);
+	pthread_mutex_destroy(&data->meals);
+	pthread_mutex_destroy(&data->death_mutex);
+}
 
 int	create_threads(t_data *data)
 {
@@ -48,8 +61,13 @@ int	main(int ac, char **av)
 	if (!ar)
 		return (write(2, "Error\n", 6), 1);
 	data = malloc(sizeof(t_data));
-	ft_init_informatoin(&data, ar);
-	create_threads(data);
-	ft_free(ar);
+	if (!data)
+		return (1);
+	if (ft_init_informatoin(&data, ar))
+		return (1);
+	if (create_threads(data))
+		return (destroy_mutex(data), free_ar(data), 1);
+	destroy_mutex(data);
+	free_ar(data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/02 13:43:11 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:38:39 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include "limits.h"
 # include "pthread.h"
 # include "sys/time.h"
-
-# include <string.h>
 
 typedef struct s_philo
 {
@@ -54,12 +52,13 @@ typedef struct s_data
 }	t_data;
 
 int		print_message(t_data *data, char *str, int id);
-void	ft_init_informatoin(t_data **data, char **ar);
+int		ft_init_informatoin(t_data **data, char **ar);
 char	*ft_strjoin(char *s1, const char *s2);
 void	init_data(t_data **data, char **ar);
 char	**ft_split(char const *s, char c);
 int		checking_dead(t_philo *philo);
 void	*start_routine(void *input);
+void	destroy_mutex(t_data *data);
 void	*monitoring(void *monitor);
 int		ft_strlen(const char *str);
 char	*ft_strdup(const char *s1);
@@ -69,6 +68,7 @@ long	ft_atoi(const char *str);
 size_t	get_current_time(void);
 int		ft_usleep(size_t time);
 size_t	get_current_time(void);
+void	free_ar(t_data *data);
 char	**parsing(char **av);
 void	ft_free(char **str);
 
