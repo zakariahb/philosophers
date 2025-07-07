@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/03 10:37:01 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:45:58 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	create_threads(t_data *data)
 	i = 0;
 	while (i < data->n_philo)
 	{
-		if (pthread_detach(data->philos[i].thread) != 0)
+		if (pthread_detach(data->philos[i].thread))
 			return (1);
 		i++;
 	}

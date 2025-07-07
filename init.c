@@ -36,7 +36,7 @@ int	init_mutex(t_data **data)
 	(*data)->forks = malloc(sizeof(pthread_mutex_t) * (*data)->n_philo);
 	while (i < (*data)->n_philo)
 	{
-		if (pthread_mutex_init(&(*data)->forks[i], NULL) != 0)
+		if (pthread_mutex_init(&(*data)->forks[i], NULL))
 		{
 			while (--i >= 0)
 				pthread_mutex_destroy(&(*data)->forks[i]);
