@@ -24,6 +24,7 @@ void	init_data(t_data **data, char **ar)
 		(*data)->t_t_eat = -1;
 	(*data)->someone_died = 0;
 	(*data)->max_meals = 0;
+	(*data)->eating_enough = 0;
 	ft_free(ar);
 }
 
@@ -83,7 +84,6 @@ int	init_philos(t_data **data)
 	{
 		(*data)->philos[i].id = i + 1;
 		(*data)->philos[i].eating = 0;
-		(*data)->philos[i].eating_enough = 0;
 		(*data)->philos[i].meals_eaten = 0;
 		(*data)->philos[i].last_meal_time = 0;
 		(*data)->philos[i].l_fork = &(*data)->forks[i];
