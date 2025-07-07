@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:11:30 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/07 15:52:55 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:54:48 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*start_routine(void *input)
 	data = philo->data;
 	if (philo->id % 2 == 0)
 		usleep(100);
-	while (!checking_dead(philo))
+	while (!checking_dead(data))
 	{
 		ft_take_fork(philo, data);
 		ft_eat(philo, data);
