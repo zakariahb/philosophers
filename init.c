@@ -99,7 +99,7 @@ int	ft_init_informatoin(t_data **data, char **ar)
 	init_data(data, ar);
 	if (init_mutex(data))
 		return (destroy_mutex(*data), 1);
-	if (!init_philos(data))
+	if (init_philos(data))
 		return (destroy_mutex(*data), 1);
 	return (0);
 }
