@@ -6,11 +6,21 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:51:54 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/03 10:13:13 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:06:02 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	ft_usleep(size_t time)
+{
+	size_t	start;
+
+	start = get_current_time();
+	while ((get_current_time() - start) < time)
+		usleep(time / 10);
+	return (0);
+}
 
 size_t	get_current_time(void)
 {

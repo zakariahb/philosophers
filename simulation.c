@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:11:30 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/07 16:54:48 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:50:46 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	ft_eat(t_philo	*philo, t_data	*data)
 	pthread_mutex_lock(&data->meals);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&data->meals);
-	usleep(data->t_eat * 1000);
+	ft_usleep(data->t_eat);
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
 }
@@ -37,7 +37,7 @@ static void	ft_eat(t_philo	*philo, t_data	*data)
 static void	ft_sleep(t_philo	*philo, t_data	*data)
 {
 	print_message(data, "is sleeping", philo->id);
-	usleep(data->t_sleep * 1000);
+	ft_usleep(data->t_sleep);
 }
 
 static void	ft_think(t_philo	*philo, t_data	*data)
