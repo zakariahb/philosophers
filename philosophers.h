@@ -44,6 +44,7 @@ typedef struct s_data
 	int				someone_died;
 	int				eating_enough;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t	eating;
 	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	meals;
 	pthread_mutex_t	time_last_eat;
@@ -51,22 +52,22 @@ typedef struct s_data
 	t_philo			*philos;
 }	t_data;
 
-int		print_message(t_data *data, char *str, int id);
+void	print_message(t_data *data, char *str, int id);
 int		ft_init_informatoin(t_data **data, char **ar);
 char	*ft_strjoin(char *s1, const char *s2);
+int     ft_usleep(size_t time, t_data *data);
 void	init_data(t_data **data, char **ar);
 char	**ft_split(char const *s, char c);
 int		checking_dead(t_data *data);
 void	*start_routine(void *input);
 void	destroy_mutex(t_data *data);
-void	*monitoring(void *monitor);
 int		ft_strlen(const char *str);
 char	*ft_strdup(const char *s1);
 char	**ft_check_arg(char **str);
 char	*ft_check_join(char **av);
 long	ft_atoi(const char *str);
+int     monitoring(t_data *data);
 size_t	get_current_time(void);
-int		ft_usleep(size_t time);
 size_t	get_current_time(void);
 void	free_ar(t_data *data);
 char	**parsing(char **av);

@@ -12,13 +12,19 @@
 
 #include "philosophers.h"
 
-int	ft_usleep(size_t time)
+int	ft_usleep(size_t time, t_data *data)
 {
 	size_t	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < time)
-		usleep(time / 10);
+	{
+		pthread_mutex_lock(&data->death_mutex);
+		if (data->someone_died)
+			return (pthread_mutex_unlock(&data->death_mutex), 0);
+		pthread_mutex_unlock(&data->death_mutex);
+		usleep(50);
+	}
 	return (0);
 }
 
@@ -56,12 +62,12 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
-int	print_message(t_data *data, char *str, int id)
+void	print_message(t_data *data, char *str, int id)
 {
 	pthread_mutex_lock(&data->print_lock);
-	printf("%lu %d %s\n", get_current_time() - data->start_simulation, id, str);
-	if (!ft_strcmp(str, "died"))
-		return (1);
+	pthread_mutex_lock(&data->death_mutex);
+	if (!data->someone_died)
+		printf("%lu %d %s\n", get_current_time() - data->start_simulation, id, str);
+	pthread_mutex_unlock(&data->death_mutex);
 	pthread_mutex_unlock(&data->print_lock);
-	return (0);
 }

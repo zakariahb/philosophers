@@ -49,6 +49,8 @@ int	init_mutex(t_data **data)
 		return (1);
 	if (pthread_mutex_init(&(*data)->print_lock, NULL))
 		return (1);
+	if (pthread_mutex_init(&(*data)->eating, NULL))
+		return (1);
 	if (pthread_mutex_init(&(*data)->meals, NULL))
 		return (1);
 	if (pthread_mutex_init(&(*data)->death_mutex, NULL))
@@ -58,18 +60,9 @@ int	init_mutex(t_data **data)
 
 void	free_ar(t_data *data)
 {
-	int	i;
-
-	i = 0;
 	if (data->philos)
-	{
-		while (i < data->n_philo)
-		{
-			free(&data->philos[i]);
-			i++;
-		}
 		free(data->philos);
-	}
+
 }
 
 int	init_philos(t_data **data)
@@ -98,8 +91,8 @@ int	ft_init_informatoin(t_data **data, char **ar)
 {
 	init_data(data, ar);
 	if (init_mutex(data))
-		return (destroy_mutex(*data), 1);
+		return (1);
 	if (init_philos(data))
-		return (destroy_mutex(*data), 1);
+		return (1);
 	return (0);
 }

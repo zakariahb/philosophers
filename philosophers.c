@@ -30,7 +30,7 @@ static int	check_one_philo(t_data *data, int id)
 	if (data->n_philo == 1)
 	{
 		print_message(data, "has left taken fork", 1);
-		ft_usleep(data->t_die);
+		ft_usleep(data->t_die, data);
 		printf("%lu %d %s\n", get_current_time() - data->start_simulation,
 			id, "died");
 		return (0);
@@ -57,7 +57,7 @@ int	create_threads(t_data *data)
 	i = 0;
 	while (i < data->n_philo)
 	{
-		if (pthread_detach(data->philos[i].thread))
+		if (pthread_join(data->philos[i].thread, NULL))
 			return (1);
 		i++;
 	}
@@ -70,6 +70,7 @@ int	main(int ac, char **av)
 	char	**ar;
 
 	ar = NULL;
+	
 	if (ac != 5 && ac != 6)
 		return (0);
 	ar = parsing(av);
@@ -81,8 +82,6 @@ int	main(int ac, char **av)
 	if (ft_init_informatoin(&data, ar))
 		return (1);
 	if (create_threads(data))
-		return (destroy_mutex(data), free_ar(data), 1);
-	destroy_mutex(data);
-	free_ar(data);
+		return (1);
 	return (0);
 }
