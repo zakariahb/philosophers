@@ -70,7 +70,6 @@ int	main(int ac, char **av)
 	char	**ar;
 
 	ar = NULL;
-	
 	if (ac != 5 && ac != 6)
 		return (0);
 	ar = parsing(av);

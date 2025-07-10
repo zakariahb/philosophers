@@ -14,7 +14,7 @@
 
 static void	ft_taking_forks(t_philo	*philo, t_data	*data)
 {
-	if (philo->id ==  data->n_philo)
+	if (philo->id == data->n_philo)
 	{
 		pthread_mutex_lock(philo->r_fork);
 		print_message(data, "has right taken fork", philo->id);
@@ -32,20 +32,14 @@ static void	ft_taking_forks(t_philo	*philo, t_data	*data)
 
 static void	ft_eat(t_philo	*philo, t_data	*data)
 {
-	
 	print_message(data, "is eating", philo->id);
-	
 	pthread_mutex_lock(&data->time_last_eat);
 	philo->last_meal_time = get_current_time();
-	// printf("lasmel : %zu\n", philo->last_meal_time);
 	pthread_mutex_unlock(&data->time_last_eat);
-	
 	ft_usleep(data->t_eat, data);
-	
 	pthread_mutex_lock(&data->meals);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&data->meals);
-	
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
 }
