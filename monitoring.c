@@ -70,8 +70,7 @@ static int	check_if_someone_died(t_data *data)
 	{
 		pthread_mutex_lock(&data->time_last_eat);
 		pthread_mutex_lock(&data->eating);
-		if (data->philos[i].last_meal_time && get_current_time()
-			- data->philos[i].last_meal_time > data->t_die && !data->philos[i].eating)
+		if (data->philos[i].last_meal_time && get_current_time() - data->philos[i].last_meal_time > data->t_die)
 		{
 			marque_as_diead(data, data->philos[i].id, "died");
 			pthread_mutex_unlock(&data->eating);

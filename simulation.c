@@ -30,25 +30,15 @@ static void	ft_taking_forks(t_philo	*philo, t_data	*data)
 	}
 }
 
-void get_last_meal_time(t_philo *philo, t_data *data)
-{
-	pthread_mutex_lock(&data->time_last_eat);
-	static size_t	i;
-	if (i)
-		philo->last_meal_time = get_current_time - philo->last_meal_time / i;
-	i++;
-	pthread_mutex_unlock(&data->time_last_eat);
-}
-
 static void	ft_eat(t_philo	*philo, t_data	*data)
 {
-	pthread_mutex_lock(&data->eating);
-	philo->eating = 1;
-	pthread_mutex_unlock(&data->eating);
 	
 	print_message(data, "is eating", philo->id);
 	
-	get_last_meal_time(philo, data);
+	pthread_mutex_lock(&data->time_last_eat);
+	philo->last_meal_time = get_current_time();
+	// printf("lasmel : %zu\n", philo->last_meal_time);
+	pthread_mutex_unlock(&data->time_last_eat);
 	
 	ft_usleep(data->t_eat, data);
 	
@@ -58,10 +48,6 @@ static void	ft_eat(t_philo	*philo, t_data	*data)
 	
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
-	
-	pthread_mutex_lock(&data->eating);
-	philo->eating = 0;
-	pthread_mutex_unlock(&data->eating);
 }
 
 static void	ft_sleep(t_philo	*philo, t_data	*data)
