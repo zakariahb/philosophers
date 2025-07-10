@@ -57,7 +57,7 @@ void	marque_as_diead(t_data *data, int id, char *str)
 {
 	pthread_mutex_lock(&data->death_mutex);
 	data->someone_died = 1;
-	printf("%lu %d %s\n", get_current_time() - data->start_simulation, id, str);
+	printf("%lld %d %s\n", get_current_time() - data->start_simulation, id, str);
 	pthread_mutex_unlock(&data->death_mutex);
 }
 
@@ -70,7 +70,7 @@ static int	check_if_someone_died(t_data *data)
 	{
 		pthread_mutex_lock(&data->time_last_eat);
 		if (data->philos[i].last_meal_time && get_current_time()
-			- data->philos[i].last_meal_time > data->t_die)
+			- data->philos[i].last_meal_time > data->t_die && !data->philos[i].eating)
 		{
 			marque_as_diead(data, data->philos[i].id, "died");
 			pthread_mutex_unlock(&data->time_last_eat);

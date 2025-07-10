@@ -31,7 +31,7 @@ static int	check_one_philo(t_data *data, int id)
 	{
 		print_message(data, "has left taken fork", 1);
 		ft_usleep(data->t_die, data);
-		printf("%lu %d %s\n", get_current_time() - data->start_simulation,
+		printf("%lld %d %s\n", get_current_time() - data->start_simulation,
 			id, "died");
 		return (0);
 	}
