@@ -73,7 +73,6 @@ int	init_philos(t_data **data)
 	while (i < (*data)->n_philo)
 	{
 		(*data)->philos[i].id = i + 1;
-		(*data)->philos[i].eating = 0;
 		(*data)->philos[i].meals_eaten = 0;
 		(*data)->philos[i].last_meal_time = 0;
 		(*data)->philos[i].l_fork = &(*data)->forks[i];
