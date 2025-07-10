@@ -14,16 +14,17 @@
 
 int	ft_usleep(size_t time, t_data *data)
 {
+	(void)data;
 	size_t	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < time)
 	{
-		pthread_mutex_lock(&data->death_mutex);
-		if (data->someone_died)
-			return (pthread_mutex_unlock(&data->death_mutex), 0);
-		pthread_mutex_unlock(&data->death_mutex);
-		usleep(50);
+		// pthread_mutex_lock(&data->death_mutex);
+		// if (data->someone_died)
+		// 	return (pthread_mutex_unlock(&data->death_mutex), 0);
+		// pthread_mutex_unlock(&data->death_mutex);
+		usleep(250);
 	}
 	return (0);
 }

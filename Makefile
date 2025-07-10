@@ -22,7 +22,7 @@ fclean : clean
 
 re : fclean all
 
-git :
+git :	fclean
 		git add .
 		git commit -m "philo"
 		git push
