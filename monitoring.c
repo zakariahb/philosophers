@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:21:42 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/08 17:22:25 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/11 10:56:54 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ static int	check_if_eat_full(t_data *data)
 	return (1);
 }
 
-void	marque_as_diead(t_data *data, int id, char *str)
+void	marque_as_died(t_data *data, int id, char *str)
 {
 	pthread_mutex_lock(&data->death_mutex);
 	data->someone_died = 1;
-	printf("%lld %d %s\n", get_current_time() - data->start_simulation, id, str);
+	printf("%lu %d %s\n", get_current_time() - data->start_simulation, id, str);
 	pthread_mutex_unlock(&data->death_mutex);
 }
 
-static int	check_if_someone_died(t_data *data)
+static int	check_if_someone_diead(t_data *data)
 {
 	int	i;
 
@@ -70,9 +70,9 @@ static int	check_if_someone_died(t_data *data)
 	{
 		pthread_mutex_lock(&data->time_last_eat);
 		if (data->philos[i].last_meal_time && get_current_time()
-			- data->philos[i].last_meal_time > data->t_die && !data->philos[i].eating)
+			- data->philos[i].last_meal_time > data->t_die)
 		{
-			marque_as_diead(data, data->philos[i].id, "died");
+			marque_as_died(data, data->philos[i].id, "died");
 			pthread_mutex_unlock(&data->time_last_eat);
 			return (0);
 		}
@@ -82,12 +82,15 @@ static int	check_if_someone_died(t_data *data)
 	return (1);
 }
 
-int	monitoring(t_data *data)
+void	*monitoring(void *monitor)
 {
+	t_data	*data;
+
+	data = (t_data *)monitor;
 	while (1)
 	{
-		if (!check_if_someone_died(data) || !check_if_eat_full(data))
-			return (0);
+		if (!check_if_someone_diead(data) || !check_if_eat_full(data))
+			return (NULL);
 	}
-	return (1);
+	return (NULL);
 }

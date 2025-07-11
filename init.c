@@ -12,6 +12,32 @@
 
 #include "philosophers.h"
 
+int	create_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->start_simulation = get_current_time();
+	if (!check_one_philo(data, data->philos[i].id))
+		return (0);
+	while (i < data->n_philo)
+	{
+		if (pthread_create(&data->philos[i].thread,
+				NULL, start_routine, &data->philos[i]))
+		{
+			while (--i >= 0)
+				pthread_detach(data->philos[i].thread);
+			return (1);
+		}
+		i++;
+	}
+	monitoring(data);
+	i = -1;
+	while (++i < data->n_philo)
+		pthread_join(data->philos[i].thread, NULL);
+	return (0);
+}
+
 void	init_data(t_data **data, char **ar)
 {
 	(*data)->n_philo = ft_atoi(ar[0]);
@@ -32,9 +58,11 @@ int	init_mutex(t_data **data)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	(*data)->forks = malloc(sizeof(pthread_mutex_t) * (*data)->n_philo);
-	while (i < (*data)->n_philo)
+	if (!(*data)->forks)
+		return (1);
+	while (++i < (*data)->n_philo)
 	{
 		if (pthread_mutex_init(&(*data)->forks[i], NULL))
 		{
@@ -43,26 +71,16 @@ int	init_mutex(t_data **data)
 			free((*data)->forks);
 			return (1);
 		}
-		i++;
 	}
 	if (pthread_mutex_init(&(*data)->time_last_eat, NULL))
 		return (1);
 	if (pthread_mutex_init(&(*data)->print_lock, NULL))
 		return (1);
-	// if (pthread_mutex_init(&(*data)->eating, NULL))
-	// 	return (1);
 	if (pthread_mutex_init(&(*data)->meals, NULL))
 		return (1);
 	if (pthread_mutex_init(&(*data)->death_mutex, NULL))
 		return (1);
 	return (0);
-}
-
-void	free_ar(t_data *data)
-{
-	if (data->philos)
-		free(data->philos);
-
 }
 
 int	init_philos(t_data **data)
@@ -91,8 +109,14 @@ int	ft_init_informatoin(t_data **data, char **ar)
 {
 	init_data(data, ar);
 	if (init_mutex(data))
-		return (1);
+		return (destroy_mutex(*data), 1);
 	if (init_philos(data))
-		return (1);
+		return (destroy_mutex(*data), 1);
+	create_threads(*data);
+	destroy_mutex(*data);
+	if ((*data)->philos)
+		free((*data)->philos);
+	if ((*data)->forks)
+		free((*data)->forks);
 	return (0);
 }

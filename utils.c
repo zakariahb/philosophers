@@ -6,32 +6,23 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:51:54 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/08 17:06:02 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/11 11:22:53 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_usleep(long long time, t_data *data)
+int	ft_usleep(size_t time)
 {
-	(void)data;
-	long long	start;
+	size_t	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < time)
-	{
-		// pthread_mutex_lock(&data->death_mutex);
-		// pthread_mutex_lock(&data->meals);
-		// if (data->someone_died || data->eating_enough)
-		// 	return (pthread_mutex_unlock(&data->meals), pthread_mutex_unlock(&data->death_mutex), 0);
-		// pthread_mutex_unlock(&data->death_mutex);
-		// pthread_mutex_unlock(&data->meals);
-		usleep(500);
-	}
+		usleep(200);
 	return (0);
 }
 
-long long	get_current_time(void)
+size_t	get_current_time(void)
 {
 	struct timeval	time;
 
@@ -70,7 +61,7 @@ void	print_message(t_data *data, char *str, int id)
 	pthread_mutex_lock(&data->print_lock);
 	pthread_mutex_lock(&data->death_mutex);
 	if (!data->someone_died)
-		printf("%lld %d %s\n", get_current_time()
+		printf("%lu %d %s\n", get_current_time()
 			- data->start_simulation, id, str);
 	pthread_mutex_unlock(&data->death_mutex);
 	pthread_mutex_unlock(&data->print_lock);
