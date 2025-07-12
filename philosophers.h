@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/11 11:47:53 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/12 07:57:40 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ typedef struct s_data
 }	t_data;
 
 void	print_message(t_data *data, char *str, int id);
-int		ft_init_informatoin(t_data **data, char **ar);
+int		ft_init_informatoin(t_data *data, char **ar);
 char	*ft_strjoin(char *s1, const char *s2);
-void	init_data(t_data **data, char **ar);
+void	init_data(t_data *data, char **ar);
 char	**ft_split(char const *s, char c);
 int		checking_dead(t_data *data);
 void	*start_routine(void *input);

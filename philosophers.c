@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/11 12:09:45 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/12 07:57:53 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	if (ft_init_informatoin(&data, ar))
+	if (ft_init_informatoin(data, ar))
 		return (1);
 	return (0);
 }
