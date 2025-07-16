@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:21:42 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/11 10:56:54 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/16 09:46:44 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static int	check_if_someone_diead(t_data *data)
 	i = 0;
 	while (i < data->n_philo)
 	{
+		if (!check_one_philo(data, data->philos[i].id))
+			return (0);
 		pthread_mutex_lock(&data->time_last_eat);
 		if (data->philos[i].last_meal_time && get_current_time()
 			- data->philos[i].last_meal_time > data->t_die)
@@ -82,15 +84,12 @@ static int	check_if_someone_diead(t_data *data)
 	return (1);
 }
 
-void	*monitoring(void *monitor)
+int	monitoring(t_data	*data)
 {
-	t_data	*data;
-
-	data = (t_data *)monitor;
 	while (1)
 	{
 		if (!check_if_someone_diead(data) || !check_if_eat_full(data))
-			return (NULL);
+			return (0);
 	}
-	return (NULL);
+	return (1);
 }

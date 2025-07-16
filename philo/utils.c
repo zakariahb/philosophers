@@ -6,19 +6,28 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:51:54 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/11 11:22:53 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/16 06:59:05 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_usleep(size_t time)
+int	ft_usleep(size_t time, t_data *data)
 {
 	size_t	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < time)
-		usleep(200);
+	{
+		pthread_mutex_lock(&data->death_mutex);
+		if (data->someone_died)
+		{
+			pthread_mutex_unlock(&data->death_mutex);
+			return (0);
+		}
+		pthread_mutex_unlock(&data->death_mutex);
+		usleep(700);
+	}
 	return (0);
 }
 

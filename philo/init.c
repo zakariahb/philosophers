@@ -18,8 +18,6 @@ int	create_threads(t_data *data)
 
 	i = 0;
 	data->start_simulation = get_current_time();
-	if (!check_one_philo(data, data->philos[i].id))
-		return (0);
 	while (i < data->n_philo)
 	{
 		if (pthread_create(&data->philos[i].thread,
@@ -51,6 +49,8 @@ void	init_data(t_data *data, char **ar)
 	data->someone_died = 0;
 	data->max_meals = 0;
 	data->eating_enough = 0;
+	data->philos = NULL;
+	data->forks = NULL;
 	ft_free(ar);
 }
 
@@ -94,7 +94,6 @@ int	init_philos(t_data *data)
 	while (i < data->n_philo)
 	{
 		data->philos[i].id = i + 1;
-		data->philos[i].eating = 0;
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].last_meal_time = 0;
 		data->philos[i].l_fork = &data->forks[i];
@@ -112,7 +111,8 @@ int	ft_init_informatoin(t_data *data, char **ar)
 		return (destroy_mutex(data), 1);
 	if (init_philos(data))
 		return (destroy_mutex(data), 1);
-	create_threads(data);
+	if (create_threads(data))
+		return (destroy_mutex(data), 1);
 	destroy_mutex(data);
 	if (data->philos)
 		free(data->philos);

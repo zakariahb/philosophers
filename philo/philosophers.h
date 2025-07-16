@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/12 07:57:40 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/16 09:49:46 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,31 @@ typedef struct s_data
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	meals;
+	pthread_mutex_t	eating;
 	pthread_mutex_t	time_last_eat;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
 }	t_data;
 
+void	marque_as_died(t_data *data, int id, char *str);
 void	print_message(t_data *data, char *str, int id);
 int		ft_init_informatoin(t_data *data, char **ar);
 char	*ft_strjoin(char *s1, const char *s2);
+int		check_one_philo(t_data *data, int id);
+int		ft_usleep(size_t time, t_data *data);
 void	init_data(t_data *data, char **ar);
 char	**ft_split(char const *s, char c);
 int		checking_dead(t_data *data);
 void	*start_routine(void *input);
 void	destroy_mutex(t_data *data);
-void	*monitoring(void *monitor);
+int		monitoring(t_data	*data);
 int		ft_strlen(const char *str);
 char	*ft_strdup(const char *s1);
 char	**ft_check_arg(char **str);
 char	*ft_check_join(char **av);
 long	ft_atoi(const char *str);
 size_t	get_current_time(void);
-int		ft_usleep(size_t time);
 size_t	get_current_time(void);
-int		check_one_philo(t_data *data, int id);
 char	**parsing(char **av);
 void	ft_free(char **str);
 

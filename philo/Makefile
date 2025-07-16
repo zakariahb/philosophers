@@ -3,7 +3,7 @@ NAME = philo
 SRC = ft_strjoin.c init.c monitoring.c philosophers.c  simulation.c ft_split.c parsing.c utils.c
 OBJ = $(SRC:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=thread -g3
+FLAGS = -Wall -Wextra -Werror
 CC = cc 
 
 all : $(NAME)
@@ -21,8 +21,3 @@ fclean : clean
 	rm -rf $(NAME)
 
 re : fclean all
-
-git :	fclean
-		git add .
-		git commit -m "philo"
-		git push
