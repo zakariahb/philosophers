@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:11:30 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/16 09:45:23 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:20:08 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	ft_take_forks(t_philo	*philo, t_data	*data)
 {
 	pthread_mutex_lock(philo->l_fork);
-	print_message(data, "has taken fork", philo->id);
+	print_message(data, "has taken a fork", philo->id);
 	pthread_mutex_lock(philo->r_fork);
-	print_message(data, "has taken fork", philo->id);
+	print_message(data, "has taken a fork", philo->id);
 }
 
 static void	ft_eat(t_philo	*philo, t_data	*data)
