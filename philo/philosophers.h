@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/17 08:39:51 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/17 09:44:14 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,5 @@ long	ft_atoi(const char *str);
 size_t	get_current_time(void);
 size_t	get_current_time(void);
 int		parsing(char **str);
-void	ft_free(char **str);
 
 #endif
