@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:47:20 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/17 09:44:14 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:25:11 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ typedef struct s_data
 
 void	marque_as_died(t_data *data, int id, char *str);
 void	print_message(t_data *data, char *str, int id);
-int		ft_init_informatoin(t_data *data, char **ar);
 int		check_one_philo(t_data *data, int id);
 int		ft_usleep(size_t time, t_data *data);
-void	init_data(t_data *data, char **ar);
+int		init_and_start_routine(t_data *data);
+int		init_data(t_data *data, char **ar);
+int		parsing(char **str, t_data *data);
 int		checking_dead(t_data *data);
 void	*start_routine(void *input);
 void	destroy_mutex(t_data *data);
@@ -65,6 +66,5 @@ int		monitoring(t_data	*data);
 long	ft_atoi(const char *str);
 size_t	get_current_time(void);
 size_t	get_current_time(void);
-int		parsing(char **str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 02:30:23 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/17 08:40:26 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:21:44 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	check_num(long n)
 	return (1);
 }
 
-int	parsing(char **str)
+int	parsing(char **str ,t_data *data)
 {
 	int		i;
 	long	n;
@@ -79,5 +79,7 @@ int	parsing(char **str)
 			return (0);
 		i++;
 	}
+	if (!init_data(data, str))
+		return (0);
 	return (1);
 }

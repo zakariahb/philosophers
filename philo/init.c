@@ -36,12 +36,20 @@ int	create_threads(t_data *data)
 	return (0);
 }
 
-void	init_data(t_data *data, char **ar)
+int	init_data(t_data *data, char **ar)
 {
 	data->n_philo = ft_atoi(ar[1]);
+	if (data->n_philo > 200)
+		return (0);
 	data->t_die = ft_atoi(ar[2]);
+	if (data->t_die < 60)	
+		return (0);
 	data->t_eat = ft_atoi(ar[3]);
+	if (data->t_eat < 60)	
+		return (0);
 	data->t_sleep = ft_atoi(ar[4]);
+	if (data->t_sleep < 60)	
+		return (0);
 	if (ar[5])
 		data->t_t_eat = ft_atoi(ar[5]);
 	else
@@ -51,6 +59,7 @@ void	init_data(t_data *data, char **ar)
 	data->eating_enough = 0;
 	data->philos = NULL;
 	data->forks = NULL;
+	return (1);
 }
 
 int	init_mutex(t_data *data)
@@ -103,19 +112,16 @@ int	init_philos(t_data *data)
 	return (0);
 }
 
-int	ft_init_informatoin(t_data *data, char **ar)
+int	init_and_start_routine(t_data *data)
 {
-	init_data(data, ar);
 	if (init_mutex(data))
-		return (destroy_mutex(data), 1);
+		return (destroy_mutex(data), free(data), 1);
 	if (init_philos(data))
-		return (destroy_mutex(data), 1);
+		return (destroy_mutex(data), free(data->forks), free(data), 1);
 	if (create_threads(data))
-		return (destroy_mutex(data), 1);
+		return (destroy_mutex(data), free(data->philos), free(data->forks), free(data), 1);
 	destroy_mutex(data);
-	if (data->philos)
-		free(data->philos);
-	if (data->forks)
-		free(data->forks);
-	return (0);
+	free(data->philos);
+	free(data->forks);
+	return (free(data), 0);
 }

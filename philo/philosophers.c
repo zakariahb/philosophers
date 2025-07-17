@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/16 16:36:50 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:35:39 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,22 @@ int	check_one_philo(t_data *data, int id)
 	}
 	return (1);
 }
-
+void f(){system("leaks philo");}
 int	main(int ac, char **av)
 {
 	t_data	*data;
 	char	**ar;
 
+	atexit(f);
 	ar = NULL;
 	if (ac != 5 && ac != 6)
 		return (write(2, "Error : ivalid argunments number\n", 34), 1);
-	if (!parsing(av))
-		return (write(2, "Error : ivalid argunments\n", 27), 1);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	if (ft_init_informatoin(data, av))
+	if (!parsing(av, data))
+		return (free(data), write(2, "Error : ivalid argunments\n", 27), 1);
+	if (init_and_start_routine(data))
 		return (1);
-	return (free(data), 0);
+	return (0);
 }
