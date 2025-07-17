@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/16 12:17:00 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:36:50 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,12 @@ int	main(int ac, char **av)
 	ar = NULL;
 	if (ac != 5 && ac != 6)
 		return (write(2, "Error : ivalid argunments number\n", 34), 1);
-	ar = parsing(av);
-	if (!ar)
-		return (write(2, "Error\n", 6), 1);
+	if (!parsing(av))
+		return (write(2, "Error : ivalid argunments\n", 27), 1);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	if (ft_init_informatoin(data, ar))
+	if (ft_init_informatoin(data, av))
 		return (1);
 	return (free(data), 0);
 }

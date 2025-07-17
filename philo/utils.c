@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:51:54 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/16 13:04:01 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/17 07:44:17 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	ft_usleep(size_t time, t_data *data)
 	while ((get_current_time() - start) < time)
 	{
 		pthread_mutex_lock(&data->death_mutex);
-		if (data->someone_died)
+		if (data->someone_died || data->eating_enough)
 		{
 			pthread_mutex_unlock(&data->death_mutex);
 			return (0);
 		}
 		pthread_mutex_unlock(&data->death_mutex);
-		usleep(700);
+		usleep(500);
 	}
 	return (0);
 }
@@ -39,29 +39,11 @@ size_t	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-char	**parsing(char **av)
-{
-	char	*p;
-	char	**ar;
-
-	ar = NULL;
-	p = ft_check_join(av);
-	if (!p)
-		return (NULL);
-	ar = ft_check_arg(&p);
-	free(p);
-	if (!ar)
-		return (NULL);
-	return (ar);
-}
-
 void	print_message(t_data *data, char *str, int id)
 {
 	pthread_mutex_lock(&data->print_lock);
-	pthread_mutex_lock(&data->death_mutex);
-	if (!data->someone_died)
+	if (!data->someone_died || data->eating_enough)
 		printf("%lu %d %s\n", get_current_time()
 			- data->start_simulation, id, str);
-	pthread_mutex_unlock(&data->death_mutex);
 	pthread_mutex_unlock(&data->print_lock);
 }

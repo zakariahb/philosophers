@@ -38,12 +38,12 @@ int	create_threads(t_data *data)
 
 void	init_data(t_data *data, char **ar)
 {
-	data->n_philo = ft_atoi(ar[0]);
-	data->t_die = ft_atoi(ar[1]);
-	data->t_eat = ft_atoi(ar[2]);
-	data->t_sleep = ft_atoi(ar[3]);
-	if (ar[4])
-		data->t_t_eat = ft_atoi(ar[4]);
+	data->n_philo = ft_atoi(ar[1]);
+	data->t_die = ft_atoi(ar[2]);
+	data->t_eat = ft_atoi(ar[3]);
+	data->t_sleep = ft_atoi(ar[4]);
+	if (ar[5])
+		data->t_t_eat = ft_atoi(ar[5]);
 	else
 		data->t_t_eat = -1;
 	data->someone_died = 0;
@@ -51,7 +51,6 @@ void	init_data(t_data *data, char **ar)
 	data->eating_enough = 0;
 	data->philos = NULL;
 	data->forks = NULL;
-	ft_free(ar);
 }
 
 int	init_mutex(t_data *data)

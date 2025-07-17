@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:11:30 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/16 13:20:08 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/17 08:37:01 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static void	ft_eat(t_philo	*philo, t_data	*data)
 	philo->last_meal_time = get_current_time();
 	pthread_mutex_unlock(&data->time_last_eat);
 	print_message(data, "is eating", philo->id);
-	ft_usleep(data->t_eat, data);
 	pthread_mutex_lock(&data->meals);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&data->meals);
+	ft_usleep(data->t_eat, data);
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
 }
 
-static void	ft_sleep(t_philo	*philo, t_data	*data)
+static void	ft_sleep(t_philo *philo, t_data	*data)
 {
 	print_message(data, "is sleeping", philo->id);
 	ft_usleep(data->t_sleep, data);
@@ -53,7 +53,7 @@ void	*start_routine(void *input)
 	philo = (t_philo *)input;
 	data = philo->data;
 	if (philo->id % 2 == 0)
-		usleep(100);
+		usleep(data->t_eat);
 	while (!checking_dead(data))
 	{
 		ft_take_forks(philo, data);
