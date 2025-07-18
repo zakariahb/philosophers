@@ -39,17 +39,17 @@ int	create_threads(t_data *data)
 int	init_data(t_data *data, char **ar)
 {
 	data->n_philo = ft_atoi(ar[1]);
-	if (data->n_philo > 200)
-		return (0);
+	// if (data->n_philo > 200)
+	// 	return (0);
 	data->t_die = ft_atoi(ar[2]);
-	if (data->t_die < 60)
-		return (0);
+	// if (data->t_die < 60)
+	// 	return (0);
 	data->t_eat = ft_atoi(ar[3]);
-	if (data->t_eat < 60)
-		return (0);
+	// if (data->t_eat < 60)
+	// 	return (0);
 	data->t_sleep = ft_atoi(ar[4]);
-	if (data->t_sleep < 60)
-		return (0);
+	// if (data->t_sleep < 60)
+	// 	return (0);
 	if (ar[5])
 		data->t_t_eat = ft_atoi(ar[5]);
 	else
