@@ -6,7 +6,7 @@
 /*   By: zalaksya <zalaksya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:09:19 by zalaksya          #+#    #+#             */
-/*   Updated: 2025/07/17 17:35:39 by zalaksya         ###   ########.fr       */
+/*   Updated: 2025/07/18 06:20:28 by zalaksya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	check_one_philo(t_data *data, int id)
 	}
 	return (1);
 }
-void f(){system("leaks philo");}
+
+void	f(){system("leaks philo");}
+
 int	main(int ac, char **av)
 {
 	t_data	*data;

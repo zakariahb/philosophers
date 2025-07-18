@@ -42,13 +42,13 @@ int	init_data(t_data *data, char **ar)
 	if (data->n_philo > 200)
 		return (0);
 	data->t_die = ft_atoi(ar[2]);
-	if (data->t_die < 60)	
+	if (data->t_die < 60)
 		return (0);
 	data->t_eat = ft_atoi(ar[3]);
-	if (data->t_eat < 60)	
+	if (data->t_eat < 60)
 		return (0);
 	data->t_sleep = ft_atoi(ar[4]);
-	if (data->t_sleep < 60)	
+	if (data->t_sleep < 60)
 		return (0);
 	if (ar[5])
 		data->t_t_eat = ft_atoi(ar[5]);
@@ -119,7 +119,8 @@ int	init_and_start_routine(t_data *data)
 	if (init_philos(data))
 		return (destroy_mutex(data), free(data->forks), free(data), 1);
 	if (create_threads(data))
-		return (destroy_mutex(data), free(data->philos), free(data->forks), free(data), 1);
+		return (destroy_mutex(data), free(data->philos),
+			free(data->forks), free(data), 1);
 	destroy_mutex(data);
 	free(data->philos);
 	free(data->forks);
